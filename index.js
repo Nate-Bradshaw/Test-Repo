@@ -1,5 +1,6 @@
 console.log("'ello wurld");
 
 function Transposition(keys, transposition_amount){
-    return(12);
+    out = keys + transposition_amount;
+    return(out);
 }
