@@ -19,20 +19,22 @@ console.log(notes, "sorted list with repeats removed");
 
 //pop() removes last, shift() removes first, Math.abs() to negative to pos
 let arLength = notes.length;
+//let tempNotes = notes;
+
 //get first and last values, compare distance (temp arr?) and repeat foreach combo
 for (let i = 0; i < arLength; i++) {
-    // Runs arLength times, with values of i 0 through 4.
-    let bestDifference = 13; //bigger than any dif could be
-    let tempNotes = notes;
-    //let outputNotes = tempNotes; //put elsware? (methinks after the itteration)
+    bestDifference = 13; //bigger than any dif could be, so 13 = error msg :)
+    tempNotes = notes;
 
-    let tempInt = tempNotes.shift(i);
+    tempInt = tempNotes.shift(i);
     tempNotes.push(tempInt);
     console.log(tempNotes)
 
-    //let tempTempNotes = tempNotes;
-    //let start = tempNotes.pop();
-    //let end = tempNotes.shift();
+    start = tempNotes.pop();
+    end = tempNotes.shift();
+    tempNotes.unshift(end);
+    tempNotes.push(start);
+    console.log(start, end, "1st and last");
     
     /*
     let tempDifference = end - start; //this is wrong, the diffence loops around
