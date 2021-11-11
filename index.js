@@ -38,11 +38,13 @@ console.log(notes, "sorted list with repeats removed");
 
 //pop() removes last, shift() removes first, Math.abs() to negative to pos
 let arLength = notes.length;
+let storedDifference = 13;
+let storedNotes = [];
+let duplication = 0;
 //let tempNotes = notes;
 
 //get first and last values, compare distance (temp arr?) and repeat foreach combo
 for (let i = 0; i < arLength; i++) {
-    bestDifference = 13; //bigger than any dif could be, so 13 = error msg :)
     tempNotes = notes;
 
     tempInt = tempNotes.shift(i);
@@ -62,6 +64,15 @@ for (let i = 0; i < arLength; i++) {
     }
     */
     differnce = FindDifference(start, end); //works now
+    if (differnce < storedDifference && differnce != storedDifference){
+        storedDifference = differnce;
+        storedNotes = tempNotes;
+    }
+    else if (differnce == storedDifference){
+        console.log(storedNotes, tempNotes);
+        debugList = storedNotes.concat(tempNotes); //puts out 2 of the same, that being the latter list t=with 8 diff, fix.
+        duplication++;
+    }
 
     console.log(differnce, "diff"); 
 
@@ -73,6 +84,9 @@ for (let i = 0; i < arLength; i++) {
     //add tiebreaker statement
     */
 }
+
+console.log(storedDifference, "diff", storedNotes, "notes", duplication, "dupe");
+console.log(debugList);
 //console.log(bestNotes, bestDiffernce);
 
 //diff counting up so 7 >> 3 isnt 4 its 8 as 7-8-9-10-11-0-1-2-3 is 8 steps. itteration ofc
