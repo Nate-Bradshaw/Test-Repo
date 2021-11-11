@@ -5,4 +5,4 @@ function Transposition(keys, transposition_amount){
     return(out);
 }
 
-console.log("testing a commit")
+console.log("testing a commit");
