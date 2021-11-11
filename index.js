@@ -1,8 +1,27 @@
 //console.log("'ello wurld");
-
+/*
 function Transposition(keys, transposition_amount){
     out = keys + transposition_amount;
     return(out);
+}
+*/
+
+
+
+function FindDifference(start, end){ //returns differnce
+    differnce = 0;
+    start1 = start;
+    end1 = end;
+    //console.log(start1, end1);
+
+    while (start1 != end1){
+        start1 = start1 + 1;
+        differnce = differnce +1;
+        if (start1 == 12){
+            start1 = 0;
+        }
+    }
+    return differnce;
 }
 
 //get list of notes (for now input directly into the code)
@@ -30,10 +49,10 @@ for (let i = 0; i < arLength; i++) {
     tempNotes.push(tempInt);
     console.log(tempNotes)
 
-    start = tempNotes.pop();
-    end = tempNotes.shift();
-    tempNotes.unshift(end);
-    tempNotes.push(start);
+    end = tempNotes.pop();
+    tempNotes.push(end);
+    start = tempNotes.shift();
+    tempNotes.unshift(start);
     console.log(start, end, "1st and last");
     
     /*
@@ -41,7 +60,12 @@ for (let i = 0; i < arLength; i++) {
     if (tempDifference < 0){
         tempDifference = Math.abs(tempDifference);
     }
+    */
+    differnce = FindDifference(start, end); //works now
 
+    console.log(differnce, "diff"); 
+
+    /*
     if (tempDifference < bestDifference){
         bestDiffernce = tempDifference;
         bestNotes = tempTempNotes; //not outputting anything idk why, fix
