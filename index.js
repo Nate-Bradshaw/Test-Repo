@@ -1,5 +1,5 @@
-function ChangeStoredNotes(temp){
-    return temp;
+function Filter(input){
+    return input > -1
 }
 
 function FindDifference(start, end){ //returns differnce
@@ -84,7 +84,7 @@ function NormalForm(notes){
         differnce = FindDifference(start, end); //works now
 
         if(differnce <= storedDifference){
-            storedNotes = ChangeStoredNotes(tempNotes);
+            storedNotes = tempNotes.filter(Filter);
             //storedNotes = tempNotes; //THIS IS TRIGGERING OUTSIDE OF THE IF STATEMENT
             storedDifference = differnce;
             console.log("moo");
