@@ -1,3 +1,7 @@
+function ChangeStoredNotes(temp){
+    return temp;
+}
+
 function FindDifference(start, end){ //returns differnce
     differnce = 0;
     start1 = start;
@@ -80,7 +84,8 @@ function NormalForm(notes){
         differnce = FindDifference(start, end); //works now
 
         if(differnce <= storedDifference){
-            storedNotes = tempNotes; //THIS IS TRIGGERING OUTSIDE OF THE IF STATEMENT
+            storedNotes = ChangeStoredNotes(tempNotes);
+            //storedNotes = tempNotes; //THIS IS TRIGGERING OUTSIDE OF THE IF STATEMENT
             storedDifference = differnce;
             console.log("moo");
         }
