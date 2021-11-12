@@ -20,11 +20,14 @@ function FindDifference(start, end){ //returns differnce
 
 function TieBreak(bestNotes, duplicates, length){
     notesLength = length.push();
-    console.log(notesLength);
+    //console.log(notesLength);
+    duplication = 0;
     for (let i = 0; i < duplicates+1; i++){
         //new code to split based on how many tiebreakers there are
+        //console.log("");
         tempNotes = bestNotes.slice(notesLength * i, notesLength * (i+1));
         storedDifference = 13;
+        //console.log(tempNotes, "tiebreak test");
 
         tempPop = tempNotes.pop();
         penultimate = tempNotes.pop();
@@ -32,38 +35,53 @@ function TieBreak(bestNotes, duplicates, length){
         tempNotes.push(tempPop);
         start = tempNotes.shift();
         tempNotes.unshift(start);
-        console.log(start, penultimate, "1st and penultimate");
+        //console.log(tempNotes, "reconstruct");
+        //console.log(start, penultimate, "1st and penultimate");
 
         normalForm = [];
         differnce = FindDifference(start, penultimate); //start and penultimate note to compare
-        if (differnce < storedDifference && differnce != storedDifference){
+        //console.log(differnce)
+        if (differnce < storedDifference){
             storedDifference = differnce;
-            normalForm = normalForm.concat(tempNotes);
+            normalForm = tempNotes.filter(Filter);
+            //console.log(normalForm, "in if state");
+        }
+        else if (differnce = storedDifference){
+            normalForm.concat(tempNotes);
             duplication++;
-        }    
-        //if there is ANOTHER tie breaker, the lowest starting number is used
+        }
     }
     //console.log(normalForm);
-    if (duplication > 1){
-        //get first note and compare for FINAL winner;
-    }
 
+    if (duplication > 0){ //may only work for 2 same
+        //if there is ANOTHER tie breaker, the lowest starting number is used
+        if (normalForm.shift() > normalForm.shift(notesLength)){
+            return normalForm.slice(0, notesLength);
+        }
+        else{
+            return normalForm.slice(notesLength, notesLength*2)
+        }
+    }
+    else{
+        return normalForm;
+    }
+    //console.log(normalForm);
     //return finalNotes; //endpoint
 }
 
 function NormalForm(notes){
     notes.sort(function(a, b){return a-b});
-    console.log(notes, "sorted list");
+    //console.log(notes, "sorted list");
     
     uniqueNotes = [...new Set(notes)];
     notes = uniqueNotes;
-    console.log(notes, "sorted list with repeats removed");
+    //console.log(notes, "sorted list with repeats removed");
     
     //pop() removes last, shift() removes first, Math.abs() to negative to pos
     arLength = notes.length;
     storedDifference = 13;
     storedNotes = [];
-    duplication = -1; //-1 out means code has gone wrong (not anymore)
+    duplication = 0;
     //let tempNotes = notes;
     
     //get first and last values, compare distance (temp arr?) and repeat foreach combo
@@ -72,7 +90,7 @@ function NormalForm(notes){
     
         tempInt = tempNotes.shift(i);
         tempNotes.push(tempInt);
-        console.log(tempNotes)
+        //console.log(tempNotes)
     
         end = tempNotes.pop();
         tempNotes.push(end);
@@ -83,28 +101,43 @@ function NormalForm(notes){
 
         differnce = FindDifference(start, end); //works now
 
-        if(differnce <= storedDifference){
+        if(differnce < storedDifference){
             storedNotes = tempNotes.filter(Filter);
             //storedNotes = tempNotes; //THIS IS TRIGGERING OUTSIDE OF THE IF STATEMENT
             storedDifference = differnce;
-            console.log("moo");
+            //console.log("moo");
+        }
+        else if (differnce == storedDifference){
+            storedNotes = storedNotes.concat(tempNotes);
+            duplication++
         }
 
-        console.log(differnce, "diff"); 
+        //console.log(differnce, "diff"); 
 
-        console.log(storedDifference, "stored diff");
-        console.log(storedNotes, "stored notes");
+        //console.log(storedDifference, "stored diff");
+        //console.log(storedNotes, "stored notes");
 
-        console.log("");
+        //console.log("");
     } 
-    console.log(storedDifference, "difference", storedNotes, "notes", duplication, "dupe");
-    //normalForm = TieBreak(storedNotes, duplication, uniqueNotes);
+    //console.log(storedDifference, "difference", storedNotes, "notes", duplication, "dupe");
+    if (duplication > 1){
+        normalForm = TieBreak(storedNotes, duplication, uniqueNotes);
+        return normalForm;
+    }
+    else{
+        normalForm = storedNotes;
+        return normalForm;
+    }
+
 }
+
+
 //get list of notes (for now input directly into the code)
-let notes = [11, 7, 2, 3, 2];
+let notes = [5, 0, 0, 4, 9];
 console.log(notes, "start list");
 
 normalFormFinal = NormalForm(notes);
+console.log(normalFormFinal, "final");
 
 
 //console.log(debugList);
