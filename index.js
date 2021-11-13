@@ -128,16 +128,39 @@ function NormalForm(notes){
         normalForm = storedNotes;
         return normalForm;
     }
+}
 
+
+function PrimeForm(normalNotes){
+    tempNotes = normalNotes;
+    NLength = tempNotes.length;
+    first = tempNotes.shift();
+    transposeAmount = 12 - first;
+    console.log(transposeAmount, "transpose amount")
+    first = 0;
+    tempNotes.unshift(first);
+    for (let i = 1; i < NLength; i++){
+        tempInt = tempNotes.shift(i);
+        tempInt = tempInt + transposeAmount;
+        if (tempInt > 11){
+            tempInt - 12;
+        }
+        tempNotes.unshift(i);
+    }
+    console.log(tempNotes, "transposed")
 }
 
 
 //get list of notes (for now input directly into the code)
-let notes = [5, 0, 0, 4, 9];
+let notes = [11, 7, 2, 3, 2];
 console.log(notes, "start list");
 
 normalFormFinal = NormalForm(notes);
 console.log(normalFormFinal, "final");
+
+primeFormFinal = PrimeForm(normalFormFinal);
+
+//prime form: transpose first note to 0 and rest by same amount, invert by subtracting current value from 12 and then finding shortest distance (like normal form)
 
 
 //console.log(debugList);
