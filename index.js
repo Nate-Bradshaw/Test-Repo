@@ -120,7 +120,7 @@ function NormalForm(notes){
         //console.log("");
     } 
     //console.log(storedDifference, "difference", storedNotes, "notes", duplication, "dupe");
-    if (duplication > 1){
+    if (duplication > 0){
         normalForm = TieBreak(storedNotes, duplication, uniqueNotes);
         return normalForm;
     }
