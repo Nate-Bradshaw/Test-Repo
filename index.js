@@ -6,7 +6,7 @@ function FindDifference(start, end){ //returns differnce
     differnce = 0;
     start1 = start;
     end1 = end;
-    //console.log(start1, end1);
+    console.log(start1, end1);
 
     while (start1 != end1){
         start1 = start1 + 1;
@@ -15,6 +15,7 @@ function FindDifference(start, end){ //returns differnce
             start1 = 0;
         }
     }
+    console.log(differnce, "diff from findDiff")
     return differnce;
 }
 
@@ -130,26 +131,66 @@ function NormalForm(notes){
     }
 }
 
-
-function PrimeForm(normalNotes){
-    tempNotes = normalNotes;
-    NLength = tempNotes.length;
+function Transpose(notes, setFirst){ //setfirst will allow transposing to different first notes but within the 0-11 system
+    transposedNotes = [];
+    tempNotes = notes;
+    nLength = tempNotes.length;
     first = tempNotes.shift();
-    transposeAmount = 12 - first;
+    transposeAmount = (setFirst + 12) - first; //this line may not work for other tranposes exept for 0
     console.log(transposeAmount, "transpose amount")
-    first = 0;
+    //first = 0;
     tempNotes.unshift(first);
-    for (let i = 1; i < NLength; i++){
+    for (let i = 0; i < nLength; i++){
         tempInt = tempNotes.shift(i);
+        console.log(tempInt, "taken from pos", i);
         tempInt = tempInt + transposeAmount;
+        console.log(tempInt, "trasposed");
         if (tempInt > 11){
-            tempInt - 12;
+            tempInt = tempInt - 12;
+            console.log(tempInt, "moo");
         }
-        tempNotes.unshift(i);
+        transposedNotes.push(tempInt);
     }
-    console.log(tempNotes, "transposed")
+    console.log(transposedNotes, "transposed")
+    return transposedNotes;
 }
 
+function Invert(notes){
+    //tempNotes = [];
+    tempNotes = notes;
+    invertedNotes = [];
+    nLength = tempNotes.length;
+    first = tempNotes.shift()
+    tempNotes.unshift(first);
+    console.log(tempNotes);
+    invertedNotes.push(first);
+    num1 = tempNotes.shift();
+    invertedNum = 0;
+    for (let i = 0; i < nLength - 1; i++){
+        num2 = tempNotes.shift();
+        diff = FindDifference(num1, num2); //how far the diff from the last note goes up from instead goes down
+
+        noteInput = diff;
+        noteInput = invertedNum - noteInput;
+        console.log(noteInput, "2");
+
+        if (noteInput < 0){
+            noteInput = Math.abs(noteInput);
+            noteInput = 12 - noteInput;
+        }
+        console.log(noteInput, "3");
+
+        invertedNum = noteInput;
+        num1 = num2; //for the next loop
+        invertedNotes.push(noteInput)
+    }
+    ascendingInvertedNotes = [];
+    for (let i = 0; i < nLength; i++){
+        a = invertedNotes.pop();
+        ascendingInvertedNotes.push(a);
+    }
+    return ascendingInvertedNotes;
+}
 
 //get list of notes (for now input directly into the code)
 let notes = [11, 7, 2, 3, 2];
@@ -158,7 +199,11 @@ console.log(notes, "start list");
 normalFormFinal = NormalForm(notes);
 console.log(normalFormFinal, "final");
 
-primeFormFinal = PrimeForm(normalFormFinal);
+transposed = Transpose(normalFormFinal, 0);
+console.log(transposed, "transposed to 0");
+
+primeFormInverted = Invert(transposed);
+console.log(primeFormInverted, "inverted notes");
 
 //prime form: transpose first note to 0 and rest by same amount, invert by subtracting current value from 12 and then finding shortest distance (like normal form)
 
