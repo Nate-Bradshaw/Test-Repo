@@ -6,7 +6,7 @@ function FindDifference(start, end){ //returns differnce
     differnce = 0;
     start1 = start;
     end1 = end;
-    console.log(start1, end1);
+    //console.log(start1, end1);
 
     while (start1 != end1){
         start1 = start1 + 1;
@@ -15,7 +15,7 @@ function FindDifference(start, end){ //returns differnce
             start1 = 0;
         }
     }
-    console.log(differnce, "diff from findDiff")
+    //console.log(differnce, "diff from findDiff")
     return differnce;
 }
 
@@ -122,6 +122,7 @@ function NormalForm(notes){
     } 
     //console.log(storedDifference, "difference", storedNotes, "notes", duplication, "dupe");
     if (duplication > 0){
+        tie = true;
         normalForm = TieBreak(storedNotes, duplication, uniqueNotes);
         return normalForm;
     }
@@ -137,21 +138,21 @@ function Transpose(notes, setFirst){ //setfirst will allow transposing to differ
     nLength = tempNotes.length;
     first = tempNotes.shift();
     transposeAmount = (setFirst + 12) - first; //this line may not work for other tranposes exept for 0
-    console.log(transposeAmount, "transpose amount")
+    //console.log(transposeAmount, "transpose amount")
     //first = 0;
     tempNotes.unshift(first);
     for (let i = 0; i < nLength; i++){
         tempInt = tempNotes.shift(i);
-        console.log(tempInt, "taken from pos", i);
+        //console.log(tempInt, "taken from pos", i);
         tempInt = tempInt + transposeAmount;
-        console.log(tempInt, "trasposed");
+        //console.log(tempInt, "trasposed");
         if (tempInt > 11){
             tempInt = tempInt - 12;
-            console.log(tempInt, "moo");
+            //console.log(tempInt, "moo");
         }
         transposedNotes.push(tempInt);
     }
-    console.log(transposedNotes, "transposed")
+    //console.log(transposedNotes, "transposed")
     return transposedNotes;
 }
 
@@ -162,7 +163,7 @@ function Invert(notes){
     nLength = tempNotes.length;
     first = tempNotes.shift()
     tempNotes.unshift(first);
-    console.log(tempNotes);
+    //console.log(tempNotes);
     invertedNotes.push(first);
     num1 = tempNotes.shift();
     invertedNum = 0;
@@ -172,13 +173,13 @@ function Invert(notes){
 
         noteInput = diff;
         noteInput = invertedNum - noteInput;
-        console.log(noteInput, "2");
+        //console.log(noteInput, "2");
 
         if (noteInput < 0){
             noteInput = Math.abs(noteInput);
             noteInput = 12 - noteInput;
         }
-        console.log(noteInput, "3");
+        //console.log(noteInput, "3");
 
         invertedNum = noteInput;
         num1 = num2; //for the next loop
@@ -194,17 +195,32 @@ function Invert(notes){
 
 //get list of notes (for now input directly into the code)
 let notes = [11, 7, 2, 3, 2];
+let tie = false;
 console.log(notes, "start list");
 
 normalFormFinal = NormalForm(notes);
 console.log(normalFormFinal, "final");
 
-transposed = Transpose(normalFormFinal, 0);
+let transposed = Transpose(normalFormFinal, 0);
 console.log(transposed, "transposed to 0");
 
-primeFormInverted = Invert(transposed);
-console.log(primeFormInverted, "inverted notes");
+let finalComparison = transposed; //THIS IS REASINGONG FOR NO REASON DUE TO
+finalComparison = finalComparison;
+console.log(finalComparison, "test1");
 
+primeFormInverted = Invert(transposed);
+console.log(primeFormInverted, "inverted notes");//THIS FOR NO REASON????
+
+if (tie = true){
+    primeFormInverted = NormalForm(primeFormInverted);//if there was a tie in the normal form
+    console.log(primeFormInverted, "was a normal form tie, so normalised inverted");
+}
+
+console.log(finalComparison, "test2");
+//finalComparison = finalComparison.concat(primeFormInverted);
+console.log(finalComparison);
+final = TieBreak(finalComparison, 2, primeFormInverted); //last one is for length
+console.log(final, "final");
 //prime form: transpose first note to 0 and rest by same amount, invert by subtracting current value from 12 and then finding shortest distance (like normal form)
 
 
