@@ -193,6 +193,14 @@ function Invert(notes){
     return ascendingInvertedNotes;
 }
 
+function MakeList(input){
+    output = [];
+    for (let x = 0; x < input.length; x++){
+        output.push(input[x]);
+    }
+    return output;
+}
+
 //get list of notes (for now input directly into the code)
 let notes = [11, 7, 2, 3, 2];
 let tie = false;
@@ -204,12 +212,11 @@ console.log(normalFormFinal, "final");
 let transposed = Transpose(normalFormFinal, 0);
 console.log(transposed, "transposed to 0");
 
-let finalComparison = transposed; //THIS IS REASINGONG FOR NO REASON DUE TO
-finalComparison = finalComparison;
+let finalComparison = MakeList(transposed);
 console.log(finalComparison, "test1");
 
 primeFormInverted = Invert(transposed);
-console.log(primeFormInverted, "inverted notes");//THIS FOR NO REASON????
+console.log(primeFormInverted, "inverted notes");//THIS FOR NO REASON????s
 
 if (tie = true){
     primeFormInverted = NormalForm(primeFormInverted);//if there was a tie in the normal form
