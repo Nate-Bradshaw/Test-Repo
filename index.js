@@ -110,6 +110,7 @@ function NormalForm(notes){
             //storedNotes = tempNotes; //THIS IS TRIGGERING OUTSIDE OF THE IF STATEMENT
             storedDifference = differnce;
             //console.log("moo");
+            duplication = 0; //yay
         }
         else if (differnce == storedDifference){
             storedNotes = storedNotes.concat(tempNotes);
@@ -130,8 +131,7 @@ function NormalForm(notes){
         return normalForm;
     }
     else{
-        normalForm = storedNotes;
-        return normalForm;
+        return storedNotes;
     }
 }
 
@@ -205,32 +205,33 @@ function MakeList(input){ //ramstead certified IHATEJAVASCRIPTIHATEJAVASCRIPTIHA
 }
 
 //get list of notes (for now input directly into the code)
-let notes = [11, 7, 2, 3, 2];
+let notes = [3, 5, 7];
 let tie = false;
+//now i add a reversal to find other chords linked 
 console.log(notes, "start list");
 
 normalFormFinal = NormalForm(notes);
-//console.log(normalFormFinal, "normal form");
+console.log(normalFormFinal, "normal form");
 
 let transposed = Transpose(normalFormFinal, 0);
-//console.log(transposed, "transposed to 0");
+console.log(transposed, "transposed to 0");
 
 let finalComparison = MakeList(transposed);
 //console.log(finalComparison, "test1");
 
 primeFormInverted = Invert(transposed);
-//console.log(primeFormInverted, "inverted notes");//THIS FOR NO REASON????s
-
+console.log(primeFormInverted, "inverted notes");//THIS FOR NO REASON????s
+Ftie = tie;
 if (tie = true){
     primeFormInverted = NormalForm(primeFormInverted);//if there was a tie in the normal form
-    //console.log(primeFormInverted, "was a normal form tie, so normalised inverted");
+    console.log(primeFormInverted, "was a normal form tie, so normalised inverted");
 }
 
 //console.log(finalComparison, "test2");
 primeFormInverted = Transpose(primeFormInverted, 0);
-//console.log(primeFormInverted);
+console.log(primeFormInverted, "to 0");
 finalComparison = finalComparison.concat(primeFormInverted);
-//console.log(finalComparison);
+console.log(finalComparison, "final comparison");
 final = TieBreak(finalComparison, 1, primeFormInverted); //last one is for length
 console.log(final, "final");
 //prime form: transpose first note to 0 and rest by same amount, invert by subtracting current value from 12 and then finding shortest distance (like normal form)
