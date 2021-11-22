@@ -164,10 +164,12 @@ function Invert(notes){
     tempNotes = notes;
     invertedNotes = [];
     nLength = tempNotes.length;
-    first = tempNotes.shift()
+    first = tempNotes.shift() //should be 0 :)
+    //console.log(first, "should = 0");
     tempNotes.unshift(first);
     //console.log(tempNotes);
     invertedNotes.push(first);
+    //console.log(invertedNotes);
     num1 = tempNotes.shift();
     invertedNum = 0;
     for (let i = 0; i < nLength - 1; i++){
@@ -186,7 +188,8 @@ function Invert(notes){
 
         invertedNum = noteInput;
         num1 = num2; //for the next loop
-        invertedNotes.push(noteInput)
+        invertedNotes.push(noteInput);
+        //console.log(invertedNotes);
     }
     ascendingInvertedNotes = [];
     for (let i = 0; i < nLength; i++){
@@ -204,8 +207,9 @@ function MakeList(input){ //ramstead certified IHATEJAVASCRIPTIHATEJAVASCRIPTIHA
     return output;
 }
 
+
 //get list of notes (for now input directly into the code)
-let notes = [3, 5, 7];
+let notes = [0, 1, 4, 8];
 let tie = false;
 //now i add a reversal to find other chords linked 
 console.log(notes, "start list");
@@ -217,31 +221,24 @@ let transposed = Transpose(normalFormFinal, 0);
 console.log(transposed, "transposed to 0");
 
 let finalComparison = MakeList(transposed);
-//console.log(finalComparison, "test1");
+console.log(finalComparison, "test1");
 
-primeFormInverted = Invert(transposed);
-console.log(primeFormInverted, "inverted notes");//THIS FOR NO REASON????s
+invFormInverted = Invert(transposed);
+console.log(invFormInverted, "inverted notes");//THIS FOR NO REASON????s
 Ftie = tie;
 if (tie = true){
-    primeFormInverted = NormalForm(primeFormInverted);//if there was a tie in the normal form
-    console.log(primeFormInverted, "was a normal form tie, so normalised inverted");
+    invFormInverted = NormalForm(invFormInverted);//if there was a tie in the normal form
+    console.log(invFormInverted, "was a normal form tie, so normalised inverted");
 }
 
-//console.log(finalComparison, "test2");
-primeFormInverted = Transpose(primeFormInverted, 0);
-console.log(primeFormInverted, "to 0");
-finalComparison = finalComparison.concat(primeFormInverted);
+console.log(finalComparison, "test2");
+invFormInverted = Transpose(invFormInverted, 0);
+console.log(invFormInverted, "to 0");
+finalComparison = finalComparison.concat(invFormInverted);
 console.log(finalComparison, "final comparison");
-final = TieBreak(finalComparison, 1, primeFormInverted); //last one is for length
-console.log(final, "final");
-//prime form: transpose first note to 0 and rest by same amount, invert by subtracting current value from 12 and then finding shortest distance (like normal form)
+primeForm = TieBreak(finalComparison, 1, invFormInverted); //last one is for length
+console.log(primeForm, "prime form");
 
+// inversion time!
+//1st off - asuming it has gone through EVERYTHING (extra step and is the inverted form)
 
-//console.log(debugList);
-//console.log(bestNotes, bestDiffernce);
-
-//diff counting up so 7 >> 3 isnt 4 its 8 as 7-8-9-10-11-0-1-2-3 is 8 steps. itteration ofc
-//(either in 0-11 form or convert)
-//normal form (remove duplicates, order and find smallest difference between first and last)
-//invert, find prime form (order and find smallest difference between first and last)
-//compare both, find smallest difference
